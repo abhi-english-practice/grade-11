@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Từ Vựng Lớp 11 – Học Kỳ 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --card: #1c2230;
+    --border: #30363d;
+    --accent1: #f0c040;
+    --accent2: #5eaeff;
+    --accent3: #ff6b6b;
+    --accent4: #56d97a;
+    --accent5: #d67bff;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 60px 20px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(94,174,255,.13) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 40% at 80% 80%, rgba(240,192,64,.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(94,174,255,.15);
+    border: 1px solid rgba(94,174,255,.35);
+    color: var(--accent2);
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 22px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #fff 30%, var(--accent1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+  .hero p {
+    color: var(--muted);
+    font-size: .95rem;
+    font-weight: 300;
+    margin-bottom: 32px;
+  }
+
+  /* ── UNIT TABS ── */
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 20px 36px;
+  }
+  .tab-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: .82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .25s;
+  }
+  .tab-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+  .tab-btn.active {
+    background: var(--accent2);
+    border-color: var(--accent2);
+    color: #0d1117;
+    font-weight: 600;
+  }
+
+  /* ── CONTENT ── */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 18px;
+  }
+
+  .unit-panel { display: none; animation: fadeUp .4s ease both; }
+  .unit-panel.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── UNIT HEADER ── */
+  .unit-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .unit-badge {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .unit-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .unit-header h2 span { display: block; font-family: 'Be Vietnam Pro', sans-serif; font-size: .8rem; font-weight: 400; color: var(--muted); margin-top: 3px; }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── WORD CARDS GRID ── */
+  .words-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .word-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    transition: border-color .2s, transform .2s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .word-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .word-card:hover { transform: translateY(-3px); }
+
+  .word-en {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .word-pos {
+    font-size: .72rem;
+    color: var(--muted);
+    font-weight: 400;
+    margin-bottom: 5px;
+  }
+  .word-vi {
+    font-size: .83rem;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .word-example {
+    font-size: .78rem;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.5;
+    border-top: 1px solid var(--border);
+    padding-top: 9px;
+  }
+  .word-example em { color: var(--text); font-style: normal; }
+
+  /* ── SPEAK BUTTON ── */
+  .speak-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 100px;
+    padding: 4px 10px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: .7rem;
+    cursor: pointer;
+    margin-bottom: 8px;
+    transition: all .2s;
+  }
+  .speak-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+  .speak-btn.speaking { border-color: var(--accent4); color: var(--accent4); animation: pulse .7s ease infinite alternate; }
+  @keyframes pulse { from { opacity: 1; } to { opacity: .5; } }
+
+  /* ── COLLOCATION TABLE ── */
+  .colls-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 40px; }
+  .coll-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: border-color .2s;
+  }
+  .coll-item:hover { border-color: var(--muted); }
+  .coll-en { font-size: .9rem; font-weight: 600; }
+  .coll-vi { font-size: .78rem; color: var(--muted); }
+  .coll-ex { font-size: .77rem; font-style: italic; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+
+  /* ── QUIZ MODE ── */
+  .quiz-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    margin-bottom: 28px;
+  }
+  .quiz-bar p { font-size: .85rem; color: var(--muted); }
+  .quiz-btn {
+    background: var(--accent1);
+    border: none;
+    color: #0d1117;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-weight: 700;
+    font-size: .82rem;
+    padding: 9px 20px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: opacity .2s;
+  }
+  .quiz-btn:hover { opacity: .85; }
+
+  .quiz-box {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  .quiz-box.active { display: block; animation: fadeUp .35s ease both; }
+  .quiz-q { font-size: 1.15rem; font-weight: 600; margin-bottom: 8px; }
+  .quiz-hint { font-size: .8rem; color: var(--muted); margin-bottom: 22px; }
+  .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 480px; margin: 0 auto 18px; }
+  .quiz-opt {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: .85rem;
+    color: var(--text);
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .quiz-opt:hover { border-color: var(--accent2); }
+  .quiz-opt.correct { background: rgba(86,217,122,.15); border-color: var(--accent4); color: var(--accent4); }
+  .quiz-opt.wrong   { background: rgba(255,107,107,.12); border-color: var(--accent3); color: var(--accent3); }
+  .quiz-feedback { font-size: .85rem; min-height: 22px; margin-bottom: 14px; font-weight: 600; }
+  .quiz-next {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: .82rem;
+    padding: 8px 20px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: border-color .2s;
+    display: none;
+  }
+  .quiz-next.show { display: inline-block; }
+  .quiz-next:hover { border-color: var(--accent2); }
+  .quiz-score { font-size: .82rem; color: var(--muted); margin-top: 10px; }
+
+  /* ── UNIT COLOR THEMES ── */
+  .u6 .unit-badge { background: rgba(240,192,64,.15); color: var(--accent1); }
+  .u6 .word-card::before { background: var(--accent1); }
+  .u6 .word-en { color: var(--accent1); }
+  .u6 .tab-btn.active, .u6 .quiz-btn { background: var(--accent1); }
+  .u6 .coll-en { color: var(--accent1); }
+
+  .u7 .unit-badge { background: rgba(94,174,255,.15); color: var(--accent2); }
+  .u7 .word-card::before { background: var(--accent2); }
+  .u7 .word-en { color: var(--accent2); }
+  .u7 .coll-en { color: var(--accent2); }
+
+  .u8 .unit-badge { background: rgba(86,217,122,.15); color: var(--accent4); }
+  .u8 .word-card::before { background: var(--accent4); }
+  .u8 .word-en { color: var(--accent4); }
+  .u8 .coll-en { color: var(--accent4); }
+
+  .u9 .unit-badge { background: rgba(255,107,107,.15); color: var(--accent3); }
+  .u9 .word-card::before { background: var(--accent3); }
+  .u9 .word-en { color: var(--accent3); }
+  .u9 .coll-en { color: var(--accent3); }
+
+  .u10 .unit-badge { background: rgba(214,123,255,.15); color: var(--accent5); }
+  .u10 .word-card::before { background: var(--accent5); }
+  .u10 .word-en { color: var(--accent5); }
+  .u10 .coll-en { color: var(--accent5); }
+
+  /* ── PROGRESS ── */
+  .progress-row {
+    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 36px;
+  }
+  .prog-chip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: .78rem;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .prog-dot { width: 8px; height: 8px; border-radius: 50%; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-tag">Tiếng Anh · Học Kỳ 2</div>
+  <h1>Ôn Tập Từ Vựng</h1>
+  <p>35 từ vựng · 20 collocations · Quiz tương tác</p>
+</div>
+
+<div class="progress-row">
+  <div class="prog-chip"><span class="prog-dot" style="background:var(--accent1)"></span>Di sản</div>
+  <div class="prog-chip"><span class="prog-dot" style="background:var(--accent2)"></span>Giáo dục</div>
+  <div class="prog-chip"><span class="prog-dot" style="background:var(--accent4)"></span>Tự lập</div>
+  <div class="prog-chip"><span class="prog-dot" style="background:var(--accent3)"></span>Xã hội</div>
+  <div class="prog-chip"><span class="prog-dot" style="background:var(--accent5)"></span>Hệ sinh thái</div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showUnit('u6',this)">Di sản</button>
+  <button class="tab-btn" onclick="showUnit('u7',this)">Giáo dục</button>
+  <button class="tab-btn" onclick="showUnit('u8',this)">Tự lập</button>
+  <button class="tab-btn" onclick="showUnit('u9',this)">Xã hội</button>
+  <button class="tab-btn" onclick="showUnit('u10',this)">Hệ sinh thái</button>
+  <button class="tab-btn" onclick="showUnit('quiz',this)">🎯 Luyện Quiz</button>
+</div>
+
+<div class="content">
+
+  <!-- ══ UNIT 6 ══ -->
+  <div id="u6" class="unit-panel u6 active">
+    <div class="unit-header">
+      <div class="unit-badge">📜</div>
+      <h2>Preserving Our Heritage <span>Bảo tồn di sản</span></h2>
+    </div>
+
+    <p class="section-label" style="color:var(--accent1)">Từ vựng</p>
+    <div class="words-grid">
+      <div class="word-card"><div class="word-en">heritage</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('heritage',this)">🔊 Nghe</button><div class="word-vi">di sản</div><div class="word-example">We must protect our cultural <em>heritage</em> for future generations.</div></div>
+      <div class="word-card"><div class="word-en">preserve</div><div class="word-pos">(v)</div><button class="speak-btn" onclick="speak('preserve',this)">🔊 Nghe</button><div class="word-vi">bảo tồn</div><div class="word-example">They are trying to <em>preserve</em> the ancient paintings in the cave.</div></div>
+      <div class="word-card"><div class="word-en">restore</div><div class="word-pos">(v)</div><button class="speak-btn" onclick="speak('restore',this)">🔊 Nghe</button><div class="word-vi">trùng tu, khôi phục</div><div class="word-example">The government spent millions to <em>restore</em> the old temple after the flood.</div></div>
+      <div class="word-card"><div class="word-en">landscape</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('landscape',this)">🔊 Nghe</button><div class="word-vi">phong cảnh</div><div class="word-example">The beautiful <em>landscape</em> of the valley attracts many photographers.</div></div>
+      <div class="word-card"><div class="word-en">folk</div><div class="word-pos">(adj)</div><button class="speak-btn" onclick="speak('folk',this)">🔊 Nghe</button><div class="word-vi">dân gian</div><div class="word-example">My grandmother often sings <em>folk</em> songs while doing housework.</div></div>
+      <div class="word-card"><div class="word-en">historic</div><div class="word-pos">(adj)</div><button class="speak-btn" onclick="speak('historic',this)">🔊 Nghe</button><div class="word-vi">có tính lịch sử quan trọng</div><div class="word-example">Independence Palace is a <em>historic</em> site in Ho Chi Minh City.</div></div>
+      <div class="word-card"><div class="word-en">ancient</div><div class="word-pos">(adj)</div><button class="speak-btn" onclick="speak('ancient',this)">🔊 Nghe</button><div class="word-vi">cổ đại</div><div class="word-example">Archaeologists discovered <em>ancient</em> ruins buried under the sand.</div></div>
+    </div>
+
+    <p class="section-label" style="color:var(--accent1)">Collocations</p>
+    <div class="colls-list">
+      <div class="coll-item"><div class="coll-en">preserve cultural heritage</div><div class="coll-vi">bảo tồn di sản văn hóa</div><div class="coll-ex">It is everyone's duty to <em>preserve cultural heritage</em>.</div></div>
+      <div class="coll-item"><div class="coll-en">restore a historic building</div><div class="coll-vi">trùng tu một tòa nhà lịch sử</div><div class="coll-ex">They used traditional materials to <em>restore the historic building</em>.</div></div>
+      <div class="coll-item"><div class="coll-en">promote traditional values</div><div class="coll-vi">quảng bá các giá trị truyền thống</div><div class="coll-ex">The festival aims to <em>promote traditional values</em> to young people.</div></div>
+      <div class="coll-item"><div class="coll-en">natural landscape</div><div class="coll-vi">phong cảnh thiên nhiên</div><div class="coll-ex">We should not build factories that spoil the <em>natural landscape</em>.</div></div>
+    </div>
+  </div>
+
+  <!-- ══ UNIT 7 ══ -->
+  <div id="u7" class="unit-panel u7">
+    <div class="unit-header">
+      <div class="unit-badge">🎓</div>
+      <h2>Education Options for School-Leavers <span>Lựa chọn giáo dục cho học sinh tốt nghiệp</span></h2>
+    </div>
+
+    <p class="section-label" style="color:var(--accent2)">Từ vựng</p>
+    <div class="words-grid">
+      <div class="word-card"><div class="word-en">school-leaver</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('school leaver',this)">🔊 Nghe</button><div class="word-vi">học sinh vừa tốt nghiệp</div><div class="word-example">Many <em>school-leavers</em> choose to take a gap year before university.</div></div>
+      <div class="word-card"><div class="word-en">pursue</div><div class="word-pos">(v)</div><button class="speak-btn" onclick="speak('pursue',this)">🔊 Nghe</button><div class="word-vi">theo đuổi</div><div class="word-example">He decided to <em>pursue</em> a career in graphic design.</div></div>
+      <div class="word-card"><div class="word-en">apprenticeship</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('apprenticeship',this)">🔊 Nghe</button><div class="word-vi">học nghề</div><div class="word-example">An <em>apprenticeship</em> allows you to earn money while you learn a trade.</div></div>
+      <div class="word-card"><div class="word-en">academic</div><div class="word-pos">(adj)</div><button class="speak-btn" onclick="speak('academic',this)">🔊 Nghe</button><div class="word-vi">thuộc học thuật</div><div class="word-example">She excels in <em>academic</em> subjects like Math and Literature.</div></div>
+      <div class="word-card"><div class="word-en">vocational</div><div class="word-pos">(adj)</div><button class="speak-btn" onclick="speak('vocational',this)">🔊 Nghe</button><div class="word-vi">thuộc dạy nghề</div><div class="word-example">The college offers <em>vocational</em> courses in mechanics and cooking.</div></div>
+      <div class="word-card"><div class="word-en">qualification</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('qualification',this)">🔊 Nghe</button><div class="word-vi">bằng cấp, chứng chỉ</div><div class="word-example">Do you have the necessary <em>qualifications</em> to apply for this job?</div></div>
+      <div class="word-card"><div class="word-en">admission</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('admission',this)">🔊 Nghe</button><div class="word-vi">sự nhập học</div><div class="word-example">He received an <em>admission</em> offer from a top university in the UK.</div></div>
+    </div>
+
+    <p class="section-label" style="color:var(--accent2)">Collocations</p>
+    <div class="colls-list">
+      <div class="coll-item"><div class="coll-en">pursue higher education</div><div class="coll-vi">theo đuổi giáo dục đại học</div><div class="coll-ex">More and more rural students are choosing to <em>pursue higher education</em>.</div></div>
+      <div class="coll-item"><div class="coll-en">gain practical skills</div><div class="coll-vi">đạt được kỹ năng thực hành</div><div class="coll-ex">Internships help students <em>gain practical skills</em> before they graduate.</div></div>
+      <div class="coll-item"><div class="coll-en">earn a degree</div><div class="coll-vi">đạt được bằng cấp</div><div class="coll-ex">It usually takes four years to <em>earn a degree</em> in engineering.</div></div>
+      <div class="coll-item"><div class="coll-en">meet admission requirements</div><div class="coll-vi">đáp ứng yêu cầu đầu vào</div><div class="coll-ex">To <em>meet the admission requirements</em>, you need to pass the entrance exam.</div></div>
+    </div>
+  </div>
+
+  <!-- ══ UNIT 8 ══ -->
+  <div id="u8" class="unit-panel u8">
+    <div class="unit-header">
+      <div class="unit-badge">💪</div>
+      <h2>Becoming Independent <span>Trở nên tự lập</span></h2>
+    </div>
+
+    <p class="section-label" style="color:var(--accent4)">Từ vựng</p>
+    <div class="words-grid">
+      <div class="word-card"><div class="word-en">independent</div><div class="word-pos">(adj)</div><button class="speak-btn" onclick="speak('independent',this)">🔊 Nghe</button><div class="word-vi">tự lập</div><div class="word-example">Living alone has taught me to be more <em>independent</em>.</div></div>
+      <div class="word-card"><div class="word-en">self-discipline</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('self discipline',this)">🔊 Nghe</button><div class="word-vi">tính tự giác</div><div class="word-example">Online learning requires a lot of <em>self-discipline</em>.</div></div>
+      <div class="word-card"><div class="word-en">life skill</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('life skill',this)">🔊 Nghe</button><div class="word-vi">kỹ năng sống</div><div class="word-example">Time management is an essential <em>life skill</em> for adults.</div></div>
+      <div class="word-card"><div class="word-en">budget</div><div class="word-pos">(v)</div><button class="speak-btn" onclick="speak('budget',this)">🔊 Nghe</button><div class="word-vi">tính toán chi tiêu</div><div class="word-example">You should learn to <em>budget</em> your salary wisely.</div></div>
+      <div class="word-card"><div class="word-en">reliable</div><div class="word-pos">(adj)</div><button class="speak-btn" onclick="speak('reliable',this)">🔊 Nghe</button><div class="word-vi">đáng tin cậy</div><div class="word-example">My neighbor is very <em>reliable</em>; he always helps when I need him.</div></div>
+      <div class="word-card"><div class="word-en">manage</div><div class="word-pos">(v)</div><button class="speak-btn" onclick="speak('manage',this)">🔊 Nghe</button><div class="word-vi">quản lý</div><div class="word-example">She has to <em>manage</em> her schoolwork and her part-time job.</div></div>
+      <div class="word-card"><div class="word-en">decision-making</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('decision making',this)">🔊 Nghe</button><div class="word-vi">việc ra quyết định</div><div class="word-example">Teenagers should be involved in family <em>decision-making</em>.</div></div>
+    </div>
+
+    <p class="section-label" style="color:var(--accent4)">Collocations</p>
+    <div class="colls-list">
+      <div class="coll-item"><div class="coll-en">become financially independent</div><div class="coll-vi">tự chủ về tài chính</div><div class="coll-ex">Her goal is to <em>become financially independent</em> by the age of 25.</div></div>
+      <div class="coll-item"><div class="coll-en">make responsible decisions</div><div class="coll-vi">đưa ra quyết định có trách nhiệm</div><div class="coll-ex">Parents should trust their children to <em>make responsible decisions</em>.</div></div>
+      <div class="coll-item"><div class="coll-en">develop time-management skills</div><div class="coll-vi">phát triển kỹ năng quản lý thời gian</div><div class="coll-ex">Keeping a diary can help you <em>develop time-management skills</em>.</div></div>
+      <div class="coll-item"><div class="coll-en">handle stress</div><div class="coll-vi">xử lý căng thẳng</div><div class="coll-ex">Regular exercise is a great way to <em>handle stress</em>.</div></div>
+    </div>
+  </div>
+
+  <!-- ══ UNIT 9 ══ -->
+  <div id="u9" class="unit-panel u9">
+    <div class="unit-header">
+      <div class="unit-badge">🤝</div>
+      <h2>Social Issues <span>Các vấn đề xã hội</span></h2>
+    </div>
+
+    <p class="section-label" style="color:var(--accent3)">Từ vựng</p>
+    <div class="words-grid">
+      <div class="word-card"><div class="word-en">bully</div><div class="word-pos">(v/n)</div><button class="speak-btn" onclick="speak('bully',this)">🔊 Nghe</button><div class="word-vi">bắt nạt / kẻ bắt nạt</div><div class="word-example">It is never acceptable to <em>bully</em> someone because of how they look.</div></div>
+      <div class="word-card"><div class="word-en">peer pressure</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('peer pressure',this)">🔊 Nghe</button><div class="word-vi">áp lực đồng trang lứa</div><div class="word-example">He started smoking because of <em>peer pressure</em>.</div></div>
+      <div class="word-card"><div class="word-en">body shaming</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('body shaming',this)">🔊 Nghe</button><div class="word-vi">chê bai ngoại hình</div><div class="word-example"><em>Body shaming</em> can lead to serious mental health problems.</div></div>
+      <div class="word-card"><div class="word-en">depression</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('depression',this)">🔊 Nghe</button><div class="word-vi">trầm cảm</div><div class="word-example">Long-term bullying can cause severe <em>depression</em>.</div></div>
+      <div class="word-card"><div class="word-en">awareness</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('awareness',this)">🔊 Nghe</button><div class="word-vi">nhận thức</div><div class="word-example">There is growing <em>awareness</em> about environmental issues.</div></div>
+      <div class="word-card"><div class="word-en">victim</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('victim',this)">🔊 Nghe</button><div class="word-vi">nạn nhân</div><div class="word-example">The <em>victim</em> of the online attack was afraid to tell his parents.</div></div>
+      <div class="word-card"><div class="word-en">campaign</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('campaign',this)">🔊 Nghe</button><div class="word-vi">chiến dịch</div><div class="word-example">They organized a <em>campaign</em> to collect clothes for the homeless.</div></div>
+    </div>
+
+    <p class="section-label" style="color:var(--accent3)">Collocations</p>
+    <div class="colls-list">
+      <div class="coll-item"><div class="coll-en">raise public awareness</div><div class="coll-vi">nâng cao nhận thức cộng đồng</div><div class="coll-ex">The event was held to <em>raise public awareness</em> about mental health.</div></div>
+      <div class="coll-item"><div class="coll-en">suffer from depression</div><div class="coll-vi">chịu đựng trầm cảm</div><div class="coll-ex">Many teenagers who <em>suffer from depression</em> hide their feelings.</div></div>
+      <div class="coll-item"><div class="coll-en">launch an anti-bullying campaign</div><div class="coll-vi">phát động chiến dịch chống bắt nạt</div><div class="coll-ex">The school decided to <em>launch an anti-bullying campaign</em> after the incident.</div></div>
+      <div class="coll-item"><div class="coll-en">cope with peer pressure</div><div class="coll-vi">đối phó với áp lực đồng trang lứa</div><div class="coll-ex">She learned to be confident to <em>cope with peer pressure</em>.</div></div>
+    </div>
+  </div>
+
+  <!-- ══ UNIT 10 ══ -->
+  <div id="u10" class="unit-panel u10">
+    <div class="unit-header">
+      <div class="unit-badge">🌿</div>
+      <h2>The Ecosystem <span>Hệ sinh thái</span></h2>
+    </div>
+
+    <p class="section-label" style="color:var(--accent5)">Từ vựng</p>
+    <div class="words-grid">
+      <div class="word-card"><div class="word-en">ecosystem</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('ecosystem',this)">🔊 Nghe</button><div class="word-vi">hệ sinh thái</div><div class="word-example">Coral reefs are a very delicate <em>ecosystem</em>.</div></div>
+      <div class="word-card"><div class="word-en">biodiversity</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('biodiversity',this)">🔊 Nghe</button><div class="word-vi">đa dạng sinh học</div><div class="word-example">The Amazon rainforest has the richest <em>biodiversity</em> on Earth.</div></div>
+      <div class="word-card"><div class="word-en">habitat</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('habitat',this)">🔊 Nghe</button><div class="word-vi">môi trường sống</div><div class="word-example">Polar bears are losing their natural <em>habitat</em> due to melting ice.</div></div>
+      <div class="word-card"><div class="word-en">endangered</div><div class="word-pos">(adj)</div><button class="speak-btn" onclick="speak('endangered',this)">🔊 Nghe</button><div class="word-vi">bị đe dọa, nguy cấp</div><div class="word-example">Tigers are listed as <em>endangered</em> animals.</div></div>
+      <div class="word-card"><div class="word-en">extinct</div><div class="word-pos">(adj)</div><button class="speak-btn" onclick="speak('extinct',this)">🔊 Nghe</button><div class="word-vi">tuyệt chủng</div><div class="word-example">If we don't protect them, these rare birds will become <em>extinct</em>.</div></div>
+      <div class="word-card"><div class="word-en">conservation</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('conservation',this)">🔊 Nghe</button><div class="word-vi">sự bảo tồn</div><div class="word-example">Money was raised for wildlife <em>conservation</em> projects.</div></div>
+      <div class="word-card"><div class="word-en">climate change</div><div class="word-pos">(n)</div><button class="speak-btn" onclick="speak('climate change',this)">🔊 Nghe</button><div class="word-vi">biến đổi khí hậu</div><div class="word-example"><em>Climate change</em> is causing more frequent droughts and floods.</div></div>
+    </div>
+
+    <p class="section-label" style="color:var(--accent5)">Collocations</p>
+    <div class="colls-list">
+      <div class="coll-item"><div class="coll-en">protect endangered species</div><div class="coll-vi">bảo vệ các loài có nguy cơ tuyệt chủng</div><div class="coll-ex">National parks are established to <em>protect endangered species</em>.</div></div>
+      <div class="coll-item"><div class="coll-en">maintain ecological balance</div><div class="coll-vi">duy trì cân bằng sinh thái</div><div class="coll-ex">Bees play a crucial role in <em>maintaining ecological balance</em>.</div></div>
+      <div class="coll-item"><div class="coll-en">loss of biodiversity</div><div class="coll-vi">sự mất đa dạng sinh học</div><div class="coll-ex">Deforestation is the main cause of the <em>loss of biodiversity</em>.</div></div>
+      <div class="coll-item"><div class="coll-en">combat climate change</div><div class="coll-vi">chống biến đổi khí hậu</div><div class="coll-ex">Planting more trees is an effective way to <em>combat climate change</em>.</div></div>
+    </div>
+  </div>
+
+  <!-- ══ QUIZ ══ -->
+  <div id="quiz" class="unit-panel">
+    <div class="unit-header">
+      <div class="unit-badge" style="background:rgba(240,192,64,.15);color:var(--accent1)">🎯</div>
+      <h2>Luyện Tập Quiz <span>Chọn nghĩa tiếng Việt đúng của từ</span></h2>
+    </div>
+
+    <div class="quiz-bar">
+      <p>Kiểm tra 35 từ vựng. Mỗi lần chơi câu hỏi được xáo ngẫu nhiên!</p>
+      <button class="quiz-btn" onclick="startQuiz()">▶ Bắt đầu</button>
+    </div>
+
+    <div id="quizBox" class="quiz-box">
+      <div class="quiz-q" id="quizQ"></div>
+      <div class="quiz-hint" id="quizHint"></div>
+      <div class="quiz-options" id="quizOpts"></div>
+      <div class="quiz-feedback" id="quizFB"></div>
+      <button class="quiz-next" id="quizNext" onclick="nextQuestion()">Câu tiếp →</button>
+      <div class="quiz-score" id="quizScore"></div>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<script>
+function speak(word, btn) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(word);
+  utter.lang = 'en-US';
+  utter.rate = 0.85;
+  // Pick an English voice if available
+  const voices = window.speechSynthesis.getVoices();
+  const enVoice = voices.find(v => v.lang.startsWith('en'));
+  if (enVoice) utter.voice = enVoice;
+  if (btn) {
+    btn.classList.add('speaking');
+    utter.onend = () => btn.classList.remove('speaking');
+    utter.onerror = () => btn.classList.remove('speaking');
+  }
+  window.speechSynthesis.speak(utter);
+}
+// Preload voices
+if (window.speechSynthesis) window.speechSynthesis.getVoices();
+
+const ALL_WORDS = [
+  {en:'heritage',vi:'di sản',unit:6},
+  {en:'preserve',vi:'bảo tồn',unit:6},
+  {en:'restore',vi:'trùng tu, khôi phục',unit:6},
+  {en:'landscape',vi:'phong cảnh',unit:6},
+  {en:'folk',vi:'dân gian',unit:6},
+  {en:'historic',vi:'có tính lịch sử quan trọng',unit:6},
+  {en:'ancient',vi:'cổ đại',unit:6},
+  {en:'school-leaver',vi:'học sinh vừa tốt nghiệp',unit:7},
+  {en:'pursue',vi:'theo đuổi',unit:7},
+  {en:'apprenticeship',vi:'học nghề',unit:7},
+  {en:'academic',vi:'thuộc học thuật',unit:7},
+  {en:'vocational',vi:'thuộc dạy nghề',unit:7},
+  {en:'qualification',vi:'bằng cấp, chứng chỉ',unit:7},
+  {en:'admission',vi:'sự nhập học',unit:7},
+  {en:'independent',vi:'tự lập',unit:8},
+  {en:'self-discipline',vi:'tính tự giác',unit:8},
+  {en:'life skill',vi:'kỹ năng sống',unit:8},
+  {en:'budget',vi:'tính toán chi tiêu',unit:8},
+  {en:'reliable',vi:'đáng tin cậy',unit:8},
+  {en:'manage',vi:'quản lý',unit:8},
+  {en:'decision-making',vi:'việc ra quyết định',unit:8},
+  {en:'bully',vi:'bắt nạt / kẻ bắt nạt',unit:9},
+  {en:'peer pressure',vi:'áp lực đồng trang lứa',unit:9},
+  {en:'body shaming',vi:'chê bai ngoại hình',unit:9},
+  {en:'depression',vi:'trầm cảm',unit:9},
+  {en:'awareness',vi:'nhận thức',unit:9},
+  {en:'victim',vi:'nạn nhân',unit:9},
+  {en:'campaign',vi:'chiến dịch',unit:9},
+  {en:'ecosystem',vi:'hệ sinh thái',unit:10},
+  {en:'biodiversity',vi:'đa dạng sinh học',unit:10},
+  {en:'habitat',vi:'môi trường sống',unit:10},
+  {en:'endangered',vi:'bị đe dọa, nguy cấp',unit:10},
+  {en:'extinct',vi:'tuyệt chủng',unit:10},
+  {en:'conservation',vi:'sự bảo tồn',unit:10},
+  {en:'climate change',vi:'biến đổi khí hậu',unit:10},
+];
+
+let shuffled=[], qIdx=0, score=0, answered=false;
+
+function shuffle(arr){ return [...arr].sort(()=>Math.random()-.5); }
+
+function startQuiz(){
+  shuffled = shuffle(ALL_WORDS);
+  qIdx=0; score=0; answered=false;
+  document.getElementById('quizBox').classList.add('active');
+  renderQ();
+}
+
+function renderQ(){
+  if(qIdx >= shuffled.length){ showFinal(); return; }
+  const q = shuffled[qIdx];
+  answered = false;
+  document.getElementById('quizQ').textContent = q.en;
+  document.getElementById('quizHint').textContent = '';
+  document.getElementById('quizFB').textContent = '';
+  document.getElementById('quizNext').classList.remove('show');
+  document.getElementById('quizScore').textContent = `Câu ${qIdx+1} / ${shuffled.length}  •  Đúng: ${score}`;
+
+  // Build 4 options: 1 correct + 3 random wrong
+  let pool = ALL_WORDS.filter(w=>w.en!==q.en);
+  let wrong = shuffle(pool).slice(0,3).map(w=>w.vi);
+  let opts = shuffle([q.vi, ...wrong]);
+
+  const el = document.getElementById('quizOpts');
+  el.innerHTML = '';
+  opts.forEach(o=>{
+    const btn = document.createElement('button');
+    btn.className='quiz-opt'; btn.textContent=o;
+    btn.onclick=()=>pick(btn,o,q.vi);
+    el.appendChild(btn);
+  });
+}
+
+function pick(btn,chosen,correct){
+  if(answered) return;
+  answered=true;
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns.forEach(b=>{ b.disabled=true; if(b.textContent===correct) b.classList.add('correct'); });
+  if(chosen===correct){
+    score++;
+    btn.classList.add('correct');
+    document.getElementById('quizFB').innerHTML='<span style="color:var(--accent4)">✓ Chính xác!</span>';
+  } else {
+    btn.classList.add('wrong');
+    document.getElementById('quizFB').innerHTML='<span style="color:var(--accent3)">✗ Sai rồi!</span>';
+  }
+  document.getElementById('quizScore').textContent = `Câu ${qIdx+1} / ${shuffled.length}  •  Đúng: ${score}`;
+  document.getElementById('quizNext').classList.add('show');
+}
+
+function nextQuestion(){ qIdx++; renderQ(); }
+
+function showFinal(){
+  const pct = Math.round(score/shuffled.length*100);
+  const msg = pct>=80 ? '🎉 Xuất sắc!' : pct>=60 ? '👍 Khá tốt!' : '💪 Cố gắng thêm nhé!';
+  document.getElementById('quizQ').textContent = `${msg}`;
+  document.getElementById('quizHint').textContent = `Kết quả: ${score}/${shuffled.length} (${pct}%)`;
+  document.getElementById('quizOpts').innerHTML = '';
+  document.getElementById('quizFB').textContent = '';
+  document.getElementById('quizNext').classList.remove('show');
+  document.getElementById('quizScore').textContent = '';
+  const btn = document.createElement('button');
+  btn.className='quiz-btn'; btn.textContent='🔄 Chơi lại'; btn.style.marginTop='14px';
+  btn.onclick=startQuiz;
+  document.getElementById('quizOpts').appendChild(btn);
+}
+
+function showUnit(id, btn){
+  document.querySelectorAll('.unit-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
